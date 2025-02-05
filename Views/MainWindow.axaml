@@ -1,0 +1,30 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:MiniRepro.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+        x:Class="MiniRepro.Views.MainWindow"
+        x:DataType="viewModels:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Mini Repro">
+
+    <!-- !!! RowDefinitions in the outer grid is required for reproduction -->
+    <Grid Margin="10" ColumnDefinitions="Auto,20,*" RowDefinitions="Auto,10,Auto" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+        <TextBlock Text="User Account" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" />
+        <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" IsVisible="{Binding AuthResult, Converter={x:Static ObjectConverters.IsNull}}">
+            <Border Background="DarkRed" BorderBrush="Gray" BorderThickness="1" CornerRadius="20" Height="20" Width="20" Margin="0,0,10,0" />
+            <TextBlock Text="Unauthorized" Margin="0,0,10,0" VerticalAlignment="Center" />
+            <Button Command="{Binding LogInCommand}" VerticalAlignment="Center">Log in</Button>
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" IsVisible="{Binding AuthResult, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <Border Background="LimeGreen" BorderBrush="Gray" BorderThickness="1" CornerRadius="20" Height="20" Width="20" Margin="0,0,10,0" />
+            <TextBlock Text="{Binding AuthorizedUserName}" VerticalAlignment="Center" Margin="0,0,10,0" />
+            <Button Command="{Binding LogOutCommand}" VerticalAlignment="Center">Log Out</Button>
+        </StackPanel>
+
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Other Values" />
+    </Grid>
+
+</Window>
